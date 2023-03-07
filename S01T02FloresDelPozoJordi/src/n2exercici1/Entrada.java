@@ -7,12 +7,12 @@ public class Entrada {
 	static Scanner scanner = new Scanner(System.in);
 	
 	public static void main(String[] args) {
-		//System.out.println(llegirByte("Error de format: "));
+		System.out.println(llegirByte("Error de format: "));
 		//System.out.println(llegirInt("Error de format: "));
 		//System.out.println(llegirFloat("Error de format: "));
 		//System.out.println(llegirDouble("Error de format: "));
 		//System.out.println(llegirChar("Error de format: "));
-		System.out.println(llegirSiNo("Error de format: "));
+		//System.out.println(llegirSiNo("Error de format: "));
 	}
 	
 	// Mètodes a implantar capturant l’excepció de la classe InputMismatchException

@@ -11,6 +11,9 @@ public class Main {
 	private static Scanner scanner;
 	
 	public static void main(String[] args) {
+		// Init
+		initRedactors();
+		initNoticies();
 		
 		scanner = new Scanner(System.in);
 		boolean sortir = false;
@@ -50,6 +53,7 @@ public class Main {
 		                   
 		                	 mostrarRedactors();
 		                	 introduirNoticia();
+		                	 mostrarRedactors();
 		                   
 		                	 break;
 		                 case 4:
@@ -57,6 +61,8 @@ public class Main {
 			                   
 		                	 mostrarRedactors();
 		                	 eliminarNoticia();
+		                	 mostrarRedactors();
+		                	 
 		                	 break;
 		                 case 5:
 		                	 System.out.println("Opció 5 seleccionada");
@@ -66,9 +72,15 @@ public class Main {
 		                	 break;
 		                 case 6:
 			                   System.out.println("Opció 6 seleccionada");
+			                   
+			                   mostrarPuntuacioNoticia();
+			                   
 			                   break;
 		                 case 7:
 			                   System.out.println("Opció 7 seleccionada");
+			                   
+			                   mostrarPreuNoticia();
+			                   
 			                   break;
 		                 case 8:
 		                   sortir = true;
@@ -83,39 +95,23 @@ public class Main {
 		}
 	}
 	
-	public static void mostrarRedactors() {
-		int index = 1;
-		for (Redactor redactor:redactorList) {
-        	System.out.println(index + ". " + redactor.nom + ", " + redactor.DNI);
-        	index++;
-        }
+	// Init Redactors
+	public static void initRedactors() {
+		Redactor r1 = new Redactor("Jordi", "123");
+		Redactor r2 = new Redactor("Sara", "456");
+		Redactor r3 = new Redactor("Pedro", "789");
+		redactorList.add(r1);
+		redactorList.add(r2);
+		redactorList.add(r3);
 	}
 	
-	public static void mostrarNoticies() {
-		for (Redactor redactor:redactorList) {
-       		System.out.println(redactor.nom + ", " + redactor.DNI);
-       		for (Noticia noticia:redactor.noticiaList) {
-       			System.out.println("- " + noticia.titular + ", " + noticia.text);
-       		}
-        }
-	}
-	
-	public static void mostrarNoticiesRedactor(int index) {
-		int indexN = 1;
-		Redactor redactorSeleccionat = redactorList.get(index-1);
-		for (Noticia noticia:redactorSeleccionat.noticiaList){
-			System.out.println(indexN + ". " + noticia.titular + ", " + noticia.text);
-		}
-	}
-	
-	public static void mostrarPreuNoticia() {
+	// Init Noticies
+	public static void initNoticies() {
 		
+		redactorList.get(0).noticiaList.add(new Futbol("Gol de Ferran Torres del Barça a la Lliga de Campions"));
 	}
 	
-	public static void mostrarPuntuacioNoticia() {
-		
-	}
-	
+	// Case 1
 	public static void introduirRedactor() {
 		System.out.println("Escrigui el nom del redactor");
 		String nom = scanner.next();
@@ -126,284 +122,445 @@ public class Main {
 		redactorList.add(newRedactor);
 	}
 	
+	// Case 2
 	public static void eliminarRedactor() {
-		System.out.println("Escrigui la posició del redactor que vol eliminar");
-		int index = scanner.nextInt();
+		System.out.println("Escrigui el dni del redactor que vol eliminar");
+		String dni = scanner.next();
+		Redactor actualRedactor = null;
 		
-		redactorList.remove(index-1);
+		for (Redactor redactor:redactorList) {
+			if (redactor.DNI.equals(dni)) {
+				actualRedactor = redactor;
+				redactorList.remove(redactor);
+			}
+		}
+		
+		if (actualRedactor == null) {
+			System.out.println("No s'ha trobat cap redactor amb aquest dni");
+		}
 	}
 	
+	// Case 3
 	public static void introduirNoticia() {
 		
-		System.out.println("Escrigui la posició del redactor que vol introduir-li una notícia");
-		int index = scanner.nextInt();
+		System.out.println("Escrigui el dni del redactor que vol introduir-li una notícia");
+		String dni = scanner.next();
+		Redactor actualRedactor = null;
 		
-		Redactor redactorSeleccionat = redactorList.get(index-1);
+		for (Redactor redactor:redactorList) {
+			if (redactor.DNI.equals(dni)) {
+				actualRedactor = redactor;
+			}
+		}
 		
-		System.out.println("Escrigui el titular de la notícia");
-		String titular = scanner.next();
+		if (actualRedactor != null) {
+			System.out.println("Escrigui el titular de la notícia");
+			String titular = scanner.nextLine();
+			
+			if (titular.isEmpty()) {
+				titular = scanner.nextLine();
+			}
+			
+			boolean noticiaValida = false;
+			int opcio;
+			
+			while(!noticiaValida) {
+				System.out.println("Escrigui el tipus de notícia que vol introduir");
+				System.out.println("1. Futbol");
+				System.out.println("2. Basquet");
+				System.out.println("3. Tenis");
+				System.out.println("4. F1");
+				System.out.println("5. Motociclisme");
+				
+				try {
+					opcio = scanner.nextInt();
+					
+					switch(opcio){
+						case 1:
+							Futbol newNoticiaFutbol = new Futbol(titular);
+							actualRedactor.noticiaList.add(newNoticiaFutbol);
+							noticiaValida = true;
+							break;
+						case 2:
+							Basquet newNoticiaBasquet = new Basquet(titular);
+							actualRedactor.noticiaList.add(newNoticiaBasquet);
+							noticiaValida = true;
+							break;
+						case 3:
+							Tenis newNoticiaTenis = new Tenis(titular);
+							actualRedactor.noticiaList.add(newNoticiaTenis);
+							noticiaValida = true;
+							break;
+						case 4:
+							F1 newNoticiaF1 = new F1(titular);
+							actualRedactor.noticiaList.add(newNoticiaF1);
+							noticiaValida = true;
+							break;
+						case 5:
+							Motociclisme newNoticiaMotociclisme = new Motociclisme(titular);
+							actualRedactor.noticiaList.add(newNoticiaMotociclisme);
+							noticiaValida = true;
+							break;
+						default:
+							System.out.println("Només números entre 1 i 5");
+					}
+					
+				} catch (InputMismatchException e) {
+					System.out.println("Tipus de notíca incorrecta. Escrigui un tipus de notícia vàlida");
+					scanner.next();
+			    }
+			}
+		}else {
+			System.out.println("No s'ha trobat cap redactor amb aquest dni");
+		}
+	}
+	
+	// Case 4
+	public static void eliminarNoticia() {
+		System.out.println("Escrigui el dni del redactor que vol eliminar-li una notícia");
+		String dni = scanner.next();
 		
-		System.out.println("Escrigui el tipus de notícia que vol introduir");
+		System.out.println("Escrigui el titular de la notícia que vol eliminar");
+		String titular = scanner.nextLine();
 		
-		System.out.println("- Futbol");
-		System.out.println("- Basquet");
-		System.out.println("- Tenis");
-		System.out.println("- F1");
-		System.out.println("- Motociclisme");
+		if (titular.isEmpty()) {
+			titular = scanner.nextLine();
+		}
 		
+		Redactor actualRedactor = null;
+		Noticia actualNoticia = null;
+		
+		for (Redactor redactor:redactorList) {
+			if (redactor.DNI.equals(dni)) {
+				actualRedactor = redactor;
+				for (Noticia noticia:redactor.noticiaList) {
+					if (noticia.titular.equals(titular)) {
+						actualNoticia = noticia;
+						redactor.noticiaList.remove(noticia);
+						return;
+					}
+				}
+			}
+		}
+		
+		if (actualRedactor == null) {
+			System.out.println("No s'ha trobat cap redactor amb aquest dni");
+		}
+		
+		if (actualNoticia == null){
+			System.out.println("No s'ha trobat cap notícia amb aquest titular");
+		}
+	}
+	
+	// Case 5
+	public static void mostrarNoticies() {
+		System.out.println("Escrigui el dni del redactor per veure les seves notícies");
+		String dni = scanner.next();
+		Redactor actualRedactor = null;
+		
+		for (Redactor redactor:redactorList) {
+			if (redactor.DNI.equals(dni)) {
+				for (int i = 0; i < redactor.noticiaList.size(); i++) {
+					System.out.println(redactor.noticiaList.get(i).toString());
+				}
+				return;
+			}
+        }
+		
+		if (actualRedactor == null) {
+			System.out.println("No s'ha trobat cap redactor amb aquest dni");
+		}
+	}
+	
+	// Case 6
+	public static void mostrarPuntuacioNoticia() {
 		boolean noticiaValida = false;
+		int opcio;
 		
 		while(!noticiaValida) {
-			String tipusNoticia = scanner.next();
+			System.out.println("Escrigui el tipus de notícia que vol introduir");
+			System.out.println("1. Futbol");
+			System.out.println("2. Basquet");
+			System.out.println("3. Tenis");
+			System.out.println("4. F1");
+			System.out.println("5. Motociclisme");
 			
-			if (tipusNoticia.equals("Futbol")) {
-				Futbol newNoticiaFutbol = new Futbol(titular);
-				redactorSeleccionat.noticiaList.add(newNoticiaFutbol);
-				noticiaValida = true;
-			}else if (tipusNoticia.equals("Basquet")) {
-				Basquet newNoticiaBasquet = new Basquet(titular);
-				redactorSeleccionat.noticiaList.add(newNoticiaBasquet);
-				noticiaValida = true;
-			}else if (tipusNoticia.equals("Tenis")) {
-				Tenis newNoticiaTenis = new Tenis(titular);
-				redactorSeleccionat.noticiaList.add(newNoticiaTenis);
-				noticiaValida = true;
-			}else if (tipusNoticia.equals("F1")) {
-				F1 newNoticiaF1 = new F1(titular);
-				redactorSeleccionat.noticiaList.add(newNoticiaF1);
-				noticiaValida = true;
-			}else if (tipusNoticia.equals("Motociclisme")) {
-				Motociclisme newNoticiaMotociclisme = new Motociclisme(titular);
-				redactorSeleccionat.noticiaList.add(newNoticiaMotociclisme);
-				noticiaValida = true;
-			}else {
+			try {
+				opcio = scanner.nextInt();
+				String competicio;
+				String club;
+				String jugador;
+				String tenista;
+				String escuderia;
+				String equip;
+				int resultat;
+				
+				switch(opcio){
+					case 1:
+						System.out.println("Escrigui la competició");
+						competicio = scanner.nextLine();
+						
+						if (competicio.isEmpty()) {
+							competicio = scanner.nextLine();
+						}
+						
+						System.out.println("Escrigui el club");
+						club = scanner.nextLine();
+						
+						if (club.isEmpty()) {
+							club = scanner.nextLine();
+						}
+						
+						System.out.println("Escrigui el jugador");
+						jugador = scanner.nextLine();
+						
+						if (jugador.isEmpty()) {
+							jugador = scanner.nextLine();
+						}
+						
+						Futbol newNoticiaFutbol = new Futbol("", competicio, club, jugador);
+						
+						resultat = newNoticiaFutbol.calcularPuntuacioNoticia();
+						System.out.println("Aquesta notícia de Futbol té una puntuació de: " + resultat + " punts");
+						
+						noticiaValida = true;
+						
+						break;
+					case 2:
+						System.out.println("Escrigui la competició");
+						competicio = scanner.nextLine();
+						
+						if (competicio.isEmpty()) {
+							competicio = scanner.nextLine();
+						}
+						
+						System.out.println("Escrigui el club");
+						club = scanner.nextLine();
+						
+						if (club.isEmpty()) {
+							club = scanner.nextLine();
+						}
+						
+						Basquet newNoticiaBasquet = new Basquet("", competicio, club);
+						
+						resultat = newNoticiaBasquet.calcularPuntuacioNoticia();
+						System.out.println("Aquesta notícia de Basquet té una puntuació de: " + resultat + " punts");
+						
+						noticiaValida = true;
+						
+						break;
+					case 3:
+						System.out.println("Escrigui la competició");
+						competicio = scanner.nextLine();
+						
+						if (competicio.isEmpty()) {
+							competicio = scanner.nextLine();
+						}
+						
+						System.out.println("Escrigui el tenista");
+						tenista = scanner.nextLine();
+						
+						if (tenista.isEmpty()) {
+							tenista = scanner.nextLine();
+						}
+						
+						Tenis newNoticiaTenis = new Tenis("", competicio, tenista);
+						
+						resultat = newNoticiaTenis.calcularPuntuacioNoticia();
+						System.out.println("Aquesta notícia de Tenis té una puntuació de: " + resultat + " punts");
+						
+						noticiaValida = true;
+						
+						break;
+					case 4:
+						System.out.println("Escrigui la escuderia");
+						escuderia = scanner.nextLine();
+						
+						if (escuderia.isEmpty()) {
+							escuderia = scanner.nextLine();
+						}
+						
+						F1 newNoticiaF1 = new F1("", escuderia);
+						
+						resultat = newNoticiaF1.calcularPuntuacioNoticia();
+						System.out.println("Aquesta notícia de F1 té una puntuació de: " + resultat + " punts");
+						
+						noticiaValida = true;
+						
+						break;
+					case 5:
+						System.out.println("Escrigui el equip");
+						equip = scanner.nextLine();
+						
+						if (equip.isEmpty()) {
+							equip = scanner.nextLine();
+						}
+						
+						Motociclisme newNoticiaMotociclisme = new Motociclisme("", equip);
+						
+						resultat = newNoticiaMotociclisme.calcularPuntuacioNoticia();
+						System.out.println("Aquesta notícia de Motociclisme té una puntuació de: " + resultat + " punts");
+
+						noticiaValida = true;
+						
+						break;
+					default:
+						System.out.println("Només números entre 1 i 5");
+				}
+				
+			} catch (InputMismatchException e) {
 				System.out.println("Tipus de notíca incorrecta. Escrigui un tipus de notícia vàlida");
-			}
-		}	
-	}
-	
-	public static void eliminarNoticia() {
-		System.out.println("Escrigui la posició del redactor que vol eliminar-li una notícia");
-		int index = scanner.nextInt();
-		
-		mostrarNoticiesRedactor(index-1);
-	}
-}
-
-class Redactor {
-	
-	String nom;
-	final String DNI;
-	static double sou = 1500;
-	List<Noticia> noticiaList = new ArrayList<>();
-	
-	public Redactor(String nom, String dni) {
-		super();
-		this.nom = nom;
-		this.DNI = dni;
-	}
-}
-
-abstract class Noticia {
-	
-	String titular;
-	String text;
-	int puntuacio;
-	double preu;
-	
-	public Noticia(String titular) {
-		super();
-		this.titular = titular;
-		this.text = "";
-	}
-	
-	public abstract double calcularPreuNoticia();
-	public abstract int calcularPuntuacioNoticia();
-}
-
-class Futbol extends Noticia{
-
-	String competicio;
-	String club;
-	String jugador;
-	
-	public Futbol(String titular) {
-		super(titular);
-		
-	}
-
-	@Override
-	public double calcularPreuNoticia() {
-		double preuTotal = 300;
-		
-		if (competicio.equals("Lliga de Campions")) {
-			preuTotal += 100;
-		}		
-		if (club.equals("Barça") || club.equals("Madrid")) {
-			preuTotal += 100;
+				scanner.next();
+		    }
 		}
-		if (jugador.equals("Ferran Torres") || jugador.equals("Benzema")) {
-			preuTotal += 50;
-		}
-		
-		return preuTotal;
-	}
-
-	@Override
-	public int calcularPuntuacioNoticia() {
-		int puntuacioTotal = 5;
-		
-		if (competicio.equals("Lliga de Campions")){
-			puntuacioTotal += 3;
-		}else if (competicio.equals("Lliga")) {
-			puntuacioTotal += 2;
-		}
-		if (club.equals("Barça") || club.equals("Madrid")) {
-			puntuacioTotal += 1;
-		}
-		if (jugador.equals("Ferran Torres") || jugador.equals("Benzema")) {
-			puntuacioTotal += 1;
-		}
-		
-		return puntuacioTotal;
-	}
-}
-
-class Basquet extends Noticia {
-
-	String competicio;
-	String club;
-	
-	public Basquet(String titular) {
-		super(titular);
-		
-	}
-
-	@Override
-	public double calcularPreuNoticia() {
-		double preuTotal = 250;
-		
-		if (competicio.equals("Eurolliga")) {
-			preuTotal += 75;
-		}		
-		if (club.equals("Barça") || club.equals("Madrid")) {
-			preuTotal += 75;
-		}
-
-		return preuTotal;
-	}
-
-	@Override
-	public int calcularPuntuacioNoticia() {
-		int puntuacioTotal = 4;
-		
-		if (competicio.equals("Eurolliga")){
-			puntuacioTotal += 3;
-		}else if (competicio.equals("ACB")) {
-			puntuacioTotal += 2;
-		}
-		if (club.equals("Barça") || club.equals("Madrid")) {
-			puntuacioTotal += 1;
-		}
-		
-		return puntuacioTotal;
-	}
-}
-
-class Tenis extends Noticia {
-
-	String competicio;
-	String tenista;
-	
-	public Tenis(String titular) {
-		super(titular);
-		
-	}
-
-	@Override
-	public double calcularPreuNoticia() {
-		double preuTotal = 150;
-		
-		if (tenista.equals("Federer") || tenista.equals("Nadal") || tenista.equals("Djokovic")) {
-			preuTotal += 100;
-		}		
-
-		return preuTotal;
-	}
-
-	@Override
-	public int calcularPuntuacioNoticia() {
-		int puntuacioTotal = 4;
-		
-		if (tenista.equals("Federer") || tenista.equals("Nadal") || tenista.equals("Djokovic")) {
-			puntuacioTotal += 3;
-		}
-		
-		return puntuacioTotal;
-	}
-}
-
-class F1 extends Noticia {
-
-	String escuderia;
-	
-	public F1(String titular) {
-		super(titular);
-		
-	}
-
-	@Override
-	public double calcularPreuNoticia() {
-		double preuTotal = 100;
-		
-		if (escuderia.equals("Ferrari") || escuderia.equals("Mercedes")) {
-			preuTotal += 50;
-		}		
-
-		return preuTotal;
-	}
-
-	@Override
-	public int calcularPuntuacioNoticia() {
-		int puntuacioTotal = 4;
-		
-		if (escuderia.equals("Ferrari") || escuderia.equals("Mercedes")) {
-			puntuacioTotal += 2;
-		}
-		
-		return puntuacioTotal;
-	}
-}
-
-class Motociclisme extends Noticia {
-
-	String equip;
-	
-	public Motociclisme(String titular) {
-		super(titular);
-		
-	}
-
-	@Override
-	public double calcularPreuNoticia() {
-		double preuTotal = 100;
-		
-		if (equip.equals("Honda") || equip.equals("Yamaha")) {
-			preuTotal += 50;
-		}		
-
-		return preuTotal;
-	}
-
-	@Override
-	public int calcularPuntuacioNoticia() {
-		int puntuacioTotal = 3;
-		
-		if (equip.equals("Honda") || equip.equals("Yamaha")) {
-			puntuacioTotal += 3;
-		}
-		
-		return puntuacioTotal;
 	}
 	
+	// Case 7
+	public static void mostrarPreuNoticia() {
+		boolean noticiaValida = false;
+		int opcio;
+		
+		while(!noticiaValida) {
+			System.out.println("Escrigui el tipus de notícia que vol introduir");
+			System.out.println("1. Futbol");
+			System.out.println("2. Basquet");
+			System.out.println("3. Tenis");
+			System.out.println("4. F1");
+			System.out.println("5. Motociclisme");
+			
+			try {
+				opcio = scanner.nextInt();
+				String competicio;
+				String club;
+				String jugador;
+				String tenista;
+				String escuderia;
+				String equip;
+				double resultat;
+				
+				switch(opcio){
+					case 1:
+						System.out.println("Escrigui la competició");
+						competicio = scanner.nextLine();
+						
+						if (competicio.isEmpty()) {
+							competicio = scanner.nextLine();
+						}
+						
+						System.out.println("Escrigui el club");
+						club = scanner.nextLine();
+						
+						if (club.isEmpty()) {
+							club = scanner.nextLine();
+						}
+						
+						System.out.println("Escrigui el jugador");
+						jugador = scanner.nextLine();
+						
+						if (jugador.isEmpty()) {
+							jugador = scanner.nextLine();
+						}
+						
+						Futbol newNoticiaFutbol = new Futbol("", competicio, club, jugador);
+						
+						resultat = newNoticiaFutbol.calcularPreuNoticia();
+						System.out.println("Aquesta notícia de Futbol té un preu de: " + resultat + "€");
+						
+						noticiaValida = true;
+						
+						break;
+					case 2:
+						System.out.println("Escrigui la competició");
+						competicio = scanner.nextLine();
+						
+						if (competicio.isEmpty()) {
+							competicio = scanner.nextLine();
+						}
+						
+						System.out.println("Escrigui el club");
+						club = scanner.nextLine();
+						
+						if (club.isEmpty()) {
+							club = scanner.nextLine();
+						}
+						
+						Basquet newNoticiaBasquet = new Basquet("", competicio, club);
+						
+						resultat = newNoticiaBasquet.calcularPreuNoticia();
+						System.out.println("Aquesta notícia de Basquet té un preu de: " + resultat + "€");
+						
+						noticiaValida = true;
+						
+						break;
+					case 3:
+						System.out.println("Escrigui la competició");
+						competicio = scanner.nextLine();
+						
+						if (competicio.isEmpty()) {
+							competicio = scanner.nextLine();
+						}
+						
+						System.out.println("Escrigui el tenista");
+						tenista = scanner.nextLine();
+						
+						if (tenista.isEmpty()) {
+							tenista = scanner.nextLine();
+						}
+						
+						Tenis newNoticiaTenis = new Tenis("", competicio, tenista);
+						
+						resultat = newNoticiaTenis.calcularPreuNoticia();
+						System.out.println("Aquesta notícia de Tenis té un preu de: " + resultat + "€");
+						
+						noticiaValida = true;
+						
+						break;
+					case 4:
+						System.out.println("Escrigui la escuderia");
+						escuderia = scanner.nextLine();
+						
+						if (escuderia.isEmpty()) {
+							escuderia = scanner.nextLine();
+						}
+						
+						F1 newNoticiaF1 = new F1("", escuderia);
+						
+						resultat = newNoticiaF1.calcularPreuNoticia();
+						System.out.println("Aquesta notícia de F1 té un preu de: " + resultat + "€");
+						
+						noticiaValida = true;
+						
+						break;
+					case 5:
+						System.out.println("Escrigui el equip");
+						equip = scanner.nextLine();
+						
+						if (equip.isEmpty()) {
+							equip = scanner.nextLine();
+						}
+						
+						Motociclisme newNoticiaMotociclisme = new Motociclisme("", equip);
+						
+						resultat = newNoticiaMotociclisme.calcularPreuNoticia();
+						System.out.println("Aquesta notícia de Motociclisme té un preu de: " + resultat + "€");
+
+						noticiaValida = true;
+						
+						break;
+					default:
+						System.out.println("Només números entre 1 i 5");
+				}
+				
+			} catch (InputMismatchException e) {
+				System.out.println("Tipus de notíca incorrecta. Escrigui un tipus de notícia vàlida");
+				scanner.next();
+		    }
+		}
+	}
+	
+	public static void mostrarRedactors() {
+		for (Redactor redactor:redactorList) {
+        	System.out.println(redactor.toString());
+        }
+	}
 }

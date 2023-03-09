@@ -39,7 +39,7 @@ public class Main {
 		for (Month month : hashSet) {
             System.out.println(month.name);
         }
-		
+		System.out.println("\s");
 		// Per recorre la llista amb iterator
 		Iterator<Month> it = monthList.iterator();
 		while(it.hasNext()) {

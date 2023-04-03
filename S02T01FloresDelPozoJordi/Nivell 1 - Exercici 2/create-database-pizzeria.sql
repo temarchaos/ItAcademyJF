@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `pizzeria`.`productes` (
   `imatge` VARCHAR(45) NULL DEFAULT NULL,
   `preu` DOUBLE NOT NULL,
   `categories_idCategories` INT(11) NOT NULL,
-  PRIMARY KEY (`idProductes`, `categories_idCategories`),
+  PRIMARY KEY (`idProductes`),
   INDEX `fk_productes_categories1_idx` (`categories_idCategories` ASC) VISIBLE,
   CONSTRAINT `fk_productes_categories1`
     FOREIGN KEY (`categories_idCategories`)
@@ -100,24 +100,21 @@ CREATE TABLE IF NOT EXISTS `pizzeria`.`empleats` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-CREATE TABLE IF NOT EXISTS `pizzeria`.`productes_has_comandes` (
+CREATE TABLE IF NOT EXISTS `pizzeria`.`linia_comandes` (
   `productes_idProductes` INT(11) NOT NULL,
-  `productes_categories_idCategories` INT(11) NOT NULL,
   `comandes_idComandes` INT(11) NOT NULL,
-  `comandes_clients_idClients` INT(11) NOT NULL,
-  `comandes_empleats_idEmpleats` INT(11) NOT NULL,
-  `comandes_empleats_botigues_idBotigues` INT(11) NOT NULL,
-  PRIMARY KEY (`productes_idProductes`, `productes_categories_idCategories`, `comandes_idComandes`, `comandes_clients_idClients`, `comandes_empleats_idEmpleats`, `comandes_empleats_botigues_idBotigues`),
-  INDEX `fk_productes_has_comandes_comandes1_idx` (`comandes_idComandes` ASC, `comandes_clients_idClients` ASC, `comandes_empleats_idEmpleats` ASC, `comandes_empleats_botigues_idBotigues` ASC) VISIBLE,
-  INDEX `fk_productes_has_comandes_productes1_idx` (`productes_idProductes` ASC, `productes_categories_idCategories` ASC) VISIBLE,
-  CONSTRAINT `fk_productes_has_comandes_productes1`
-    FOREIGN KEY (`productes_idProductes` , `productes_categories_idCategories`)
-    REFERENCES `pizzeria`.`productes` (`idProductes` , `categories_idCategories`)
+  `quantitat` INT(11) NOT NULL,
+  PRIMARY KEY (`productes_idProductes`, `comandes_idComandes`),
+  INDEX `fk_linia_comandes_comandes1_idx` (`comandes_idComandes` ASC) VISIBLE,
+  INDEX `fk_linia_comandes_productes1_idx` (`productes_idProductes` ASC) VISIBLE,
+  CONSTRAINT `fk_linia_comandes_productes1`
+    FOREIGN KEY (`productes_idProductes`)
+    REFERENCES `pizzeria`.`productes` (`idProductes`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
-  CONSTRAINT `fk_productes_has_comandes_comandes1`
-    FOREIGN KEY (`comandes_idComandes` , `comandes_clients_idClients` , `comandes_empleats_idEmpleats` , `comandes_empleats_botigues_idBotigues`)
-    REFERENCES `pizzeria`.`comandes` (`idComandes` , `clients_idClients` , `empleats_idEmpleats` , `empleats_botigues_idBotigues`)
+  CONSTRAINT `fk_linia_comandes_comandes1`
+    FOREIGN KEY (`comandes_idComandes`)
+    REFERENCES `pizzeria`.`comandes` (`idComandes`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB

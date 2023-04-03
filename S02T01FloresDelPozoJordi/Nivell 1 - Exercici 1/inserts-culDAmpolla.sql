@@ -24,9 +24,9 @@ INSERT INTO `empleats` VALUES (3);
 
 SELECT * FROM empleats;
 
-INSERT INTO `clients` VALUES (1,'Pepe',06933,123456789,'pepe@hotmail.com',now());
-INSERT INTO `clients` VALUES (2,'Jordi',16341,987654321,'jordi@gmail.com',now());
-INSERT INTO `clients` VALUES (3,'Toni',65725,987659493,'toni@gmail.com',now());
+INSERT INTO `clients` VALUES (1,'Pepe',06933,123456789,'pepe@hotmail.com',now(),null);
+INSERT INTO `clients` VALUES (2,'Jordi',16341,987654321,'jordi@gmail.com',now(),null);
+INSERT INTO `clients` VALUES (3,'Toni',65725,987659493,'toni@gmail.com',now(),null);
 
 SELECT * FROM clients;
 

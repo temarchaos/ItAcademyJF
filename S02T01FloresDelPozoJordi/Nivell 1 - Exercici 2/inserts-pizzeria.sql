@@ -34,10 +34,10 @@ INSERT INTO `comandes` VALUES (1,now(),1,1,1,1,9.5),
 
 SELECT * FROM comandes;
 
-INSERT INTO `productes_has_comandes` VALUES (2,2,1,1,1,1),
-											(3,3,1,1,1,1),
-                                            (1,1,2,2,2,2),
-                                            (1,1,3,3,3,3),
-                                            (3,3,3,3,3,3);
+INSERT INTO `productes_has_comandes` VALUES (2,1,1),
+											(3,1,1),
+                                            (1,2,1),
+                                            (1,3,1),
+                                            (3,1,1);
 
 SELECT * FROM productes_has_comandes;

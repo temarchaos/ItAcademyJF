@@ -36,7 +36,14 @@ CREATE TABLE IF NOT EXISTS `culdampolla`.`clients` (
   `telefon` INT(11) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
   `dataRegistre` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`idClients`))
+  `idClients_recomanat` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`idClients`),
+  INDEX `fk_clients_clients1_idx` (`idClients_recomanat` ASC) VISIBLE,
+  CONSTRAINT `fk_clients_clients1_idx`
+    FOREIGN KEY (`idClients_recomanat`)
+    REFERENCES `culdampolla`.`clients` (`idClients`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_bin;

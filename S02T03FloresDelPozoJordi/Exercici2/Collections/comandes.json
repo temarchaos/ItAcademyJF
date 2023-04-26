@@ -1,0 +1,82 @@
+[{
+  "_id": {
+    "$oid": "64494af378f7960090a683a9"
+  },
+  "client_id": {
+    "$oid": "6449408878f7960090a6834a"
+  },
+  "botiga_id": {
+    "$oid": "644947c978f7960090a68389"
+  },
+  "data_hora": {
+    "$date": "1999-12-31T23:00:00.000Z"
+  },
+  "tipus_comanda": "recollida",
+  "productes": [
+    {
+      "producte_id": {
+        "$oid": "6449446378f7960090a68379"
+      },
+      "quantitat": 1
+    },
+    {
+      "producte_id": {
+        "$oid": "6449447178f7960090a6837a"
+      },
+      "quantitat": 1
+    }
+  ],
+  "preu_total": 9.5
+},{
+  "_id": {
+    "$oid": "64494c5c78f7960090a683c0"
+  },
+  "client_id": {
+    "$oid": "644942e578f7960090a68363"
+  },
+  "botiga_id": {
+    "$oid": "6449480878f7960090a68391"
+  },
+  "data_hora": {
+    "$date": "1999-12-31T23:00:00.000Z"
+  },
+  "tipus_comanda": "domicili",
+  "productes": [
+    {
+      "producte_id": {
+        "$oid": "6449452d78f7960090a6837d"
+      },
+      "quantitat": 1
+    }
+  ],
+  "preu_total": 15
+},{
+  "_id": {
+    "$oid": "64494cbe78f7960090a683c7"
+  },
+  "client_id": {
+    "$oid": "6449434678f7960090a68369"
+  },
+  "botiga_id": {
+    "$oid": "6449483778f7960090a68396"
+  },
+  "data_hora": {
+    "$date": "1999-12-31T23:00:00.000Z"
+  },
+  "tipus_comanda": "domicili",
+  "productes": [
+    {
+      "producte_id": {
+        "$oid": "6449452d78f7960090a6837d"
+      },
+      "quantitat": 1
+    },
+    {
+      "producte_id:": {
+        "$oid": "6449465178f7960090a68384"
+      },
+      "quantitat": 1
+    }
+  ],
+  "preu_total": 16.5
+}]

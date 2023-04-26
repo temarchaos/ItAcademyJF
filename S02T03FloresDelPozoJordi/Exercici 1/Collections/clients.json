@@ -1,0 +1,43 @@
+[{
+  "_id": {
+    "$oid": "6448055dce00ad3c32baa4dc"
+  },
+  "nom": "Pepe",
+  "codi_postal": 6933,
+  "telefon": 123456789,
+  "email": "pepe@hotmail.com",
+  "data_registre": {
+    "$date": "1999-12-30T23:00:00.000Z"
+  },
+  "recomenat_id": {
+    "$oid": "6448055dce00ad3c32baa4dc"
+  }
+},{
+  "_id": {
+    "$oid": "64480b0fce00ad3c32baa4e7"
+  },
+  "nom": "Jordi",
+  "codi_postal": 16341,
+  "telefon": 987654321,
+  "email": "jordi@gmail.com",
+  "data_registre": {
+    "$date": "1999-12-30T23:00:00.000Z"
+  },
+  "recomenat_id": {
+    "$oid": "6448055dce00ad3c32baa4dc"
+  }
+},{
+  "_id": {
+    "$oid": "64480b4bce00ad3c32baa4e8"
+  },
+  "nom": "Toni",
+  "codi_postal": 65725,
+  "telefon": 987659493,
+  "email": "toni@gmail.com",
+  "data_registre": {
+    "$date": "1999-12-30T23:00:00.000Z"
+  },
+  "recomenat_id": {
+    "$oid": "64480b4bce00ad3c32baa4e8"
+  }
+}]

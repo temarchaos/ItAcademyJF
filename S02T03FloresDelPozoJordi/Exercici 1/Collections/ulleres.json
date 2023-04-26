@@ -1,0 +1,46 @@
+[{
+  "_id": {
+    "$oid": "6448020dce00ad3c32baa4d7"
+  },
+  "marca": "Boss",
+  "graduacioVE": 2,
+  "graduacioVD": 2,
+  "tipus_muntura": "flotant",
+  "color_muntura": "Verd",
+  "colorVE": "Blau",
+  "colorVD": "Blau",
+  "preu": 49,
+  "proveidor_id": {
+    "$oid": "64480072ce00ad3c32baa4d3"
+  }
+},{
+  "_id": {
+    "$oid": "644802dbce00ad3c32baa4d8"
+  },
+  "marca": "Siroko",
+  "graduacioVE": -2,
+  "graduacioVD": -2,
+  "tipus_muntura": "pasta",
+  "color_muntura": "Lila",
+  "colorVE": "Blau",
+  "colorVD": "Blau",
+  "preu": 35,
+  "proveidor": {
+    "$oid": "6447ff40ce00ad3c32baa4d2"
+  }
+},{
+  "_id": {
+    "$oid": "64480389ce00ad3c32baa4d9"
+  },
+  "marca": "Tous",
+  "graduacioVE": 4,
+  "graduacioVD": 4,
+  "tipus_muntura": "metàlica",
+  "color_muntura": "Negre",
+  "colorVE": "Blau",
+  "colorVD": "Blau",
+  "preu": 59,
+  "proveidor": {
+    "$oid": "644800d7ce00ad3c32baa4d4"
+  }
+}]

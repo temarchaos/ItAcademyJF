@@ -1,0 +1,67 @@
+[{
+  "_id": {
+    "$oid": "64480d54ce00ad3c32baa4f0"
+  },
+  "ulleres": [
+    {
+      "quantitat": 1,
+      "ullera_id": {
+        "$oid": "6448020dce00ad3c32baa4d7"
+      }
+    }
+  ],
+  "data_venda": {
+    "$date": "1999-12-31T23:00:00.000Z"
+  },
+  "preu_venda": 49,
+  "client_id": {
+    "$oid": "6448055dce00ad3c32baa4dc"
+  },
+  "empleat_id": {
+    "$oid": "64480bdcce00ad3c32baa4eb"
+  }
+},{
+  "_id": {
+    "$oid": "64480f95ce00ad3c32baa503"
+  },
+  "ulleres": [
+    {
+      "quantitat": 1,
+      "ullera_id": {
+        "$oid": "644802dbce00ad3c32baa4d8"
+      }
+    }
+  ],
+  "data_venda": {
+    "$date": "1999-12-31T23:00:00.000Z"
+  },
+  "preu_venda": 35,
+  "client_id": {
+    "$oid": "64480b0fce00ad3c32baa4e7"
+  },
+  "empleat_id": {
+    "$oid": "64480be6ce00ad3c32baa4ec"
+  }
+},{
+  "_id": {
+    "$oid": "64480fa9ce00ad3c32baa504"
+  },
+  "ulleres": [
+    {
+      "quantitat": 1,
+      "ullera_id": {
+        "$oid": "64480389ce00ad3c32baa4d9"
+      }
+    }
+  ],
+  "data_venda": {
+    "$date": "1999-12-31T23:00:00.000Z"
+  },
+  "preu_venda": 59,
+  "client_id": {
+    "$oid": "64480b4bce00ad3c32baa4e8"
+  },
+  "empleat_id": {
+    "$oid": "64480befce00ad3c32baa4ed"
+  }
+}]

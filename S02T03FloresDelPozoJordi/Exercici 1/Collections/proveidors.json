@@ -1,0 +1,52 @@
+[{
+  "_id": {
+    "$oid": "6447ff40ce00ad3c32baa4d2"
+  },
+  "nom": "OPTIK",
+  "adreça": {
+    "carrer": "Shanon Route",
+    "numero": 26708,
+    "pis": "",
+    "porta": "",
+    "ciutat": "Overland Park",
+    "codi_postal": 29550,
+    "pais": "Dominican Republic"
+  },
+  "telefon": 987654321,
+  "fax": 125634789,
+  "nif": "F19480771"
+},{
+  "_id": {
+    "$oid": "64480072ce00ad3c32baa4d3"
+  },
+  "nom": "LUNETTES",
+  "adreça": {
+    "carrer": "Eladio Isle",
+    "numero": 400,
+    "pis": "",
+    "porta": "",
+    "ciutat": "Washington",
+    "codi_postal": 13163,
+    "pais": "Sri Lanka"
+  },
+  "telefon": 123456789,
+  "fax": 234567890,
+  "nif": "H09991159"
+},{
+  "_id": {
+    "$oid": "644800d7ce00ad3c32baa4d4"
+  },
+  "nom": "VISIO",
+  "adreça": {
+    "carrer": "Taya Meadow",
+    "numero": 33,
+    "pis": "",
+    "porta": "",
+    "ciutat": "Gilbert",
+    "codi_postal": 94242,
+    "pais": "Georgia"
+  },
+  "telefon": 192837465,
+  "fax": 908979695,
+  "nif": "A99369142"
+}]

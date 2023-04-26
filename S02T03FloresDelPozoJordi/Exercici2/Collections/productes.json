@@ -1,0 +1,34 @@
+[{
+  "_id": {
+    "$oid": "6449452d78f7960090a6837d"
+  },
+  "nom": "Carbonara",
+  "descripcio": "",
+  "imatge": "",
+  "preu": 15,
+  "categoria_id": {
+    "$oid": "6449445778f7960090a68378"
+  }
+},{
+  "_id": {
+    "$oid": "6449459c78f7960090a68381"
+  },
+  "nom": "Double Cheese",
+  "descripcio": "",
+  "imatge": "",
+  "preu": 8,
+  "categoria_id": {
+    "$oid": "6449446378f7960090a68379"
+  }
+},{
+  "_id": {
+    "$oid": "6449465178f7960090a68384"
+  },
+  "nom": "Agua 33cl",
+  "descripcio": "",
+  "imatge": "",
+  "preu": 1.5,
+  "categoria_id": {
+    "$oid": "6449447178f7960090a6837a"
+  }
+}]

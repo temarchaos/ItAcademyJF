@@ -1,0 +1,46 @@
+[{
+  "_id": {
+    "$oid": "6449408878f7960090a6834a"
+  },
+  "nom": "Simon",
+  "cognoms": "Flores Vicente",
+  "adreça": "Therese Mill 79094",
+  "telefon": 987654321,
+  "codi_postal": 720,
+  "localitat_id": {
+    "$oid": "6449418378f7960090a6834d"
+  },
+  "provincia_id": {
+    "$oid": "644941c178f7960090a68353"
+  }
+},{
+  "_id": {
+    "$oid": "644942e578f7960090a68363"
+  },
+  "nom": "Juana",
+  "cognoms": "Perez Molinero",
+  "adreça": "Camila Isle 269",
+  "telefon": 987654323,
+  "codi_postal": 55470,
+  "localitat_id": {
+    "$oid": "6449419478f7960090a6834f"
+  },
+  "provincia_id": {
+    "$oid": "644941cc78f7960090a68354"
+  }
+},{
+  "_id": {
+    "$oid": "6449434678f7960090a68369"
+  },
+  "nom": "Aina",
+  "cognoms": "Puente Sanchez",
+  "adreça": "Gladyce Via 0124",
+  "telefon": 987654322,
+  "codi_postal": 84921,
+  "localitat_id": {
+    "$oid": "644941a078f7960090a68350"
+  },
+  "provincia_id": {
+    "$oid": "644941d978f7960090a68355"
+  }
+}]

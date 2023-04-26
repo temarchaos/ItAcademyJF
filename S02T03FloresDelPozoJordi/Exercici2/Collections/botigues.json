@@ -1,0 +1,37 @@
+[{
+  "_id": {
+    "$oid": "644947c978f7960090a68389"
+  },
+  "adreça": "Curtis Cape 472",
+  "codi_postal": 8069,
+  "localitat_id": {
+    "$oid": "6449418378f7960090a6834d"
+  },
+  "provincia_id": {
+    "$oid": "644941c178f7960090a68353"
+  }
+},{
+  "_id": {
+    "$oid": "6449480878f7960090a68391"
+  },
+  "adreça": "Cronin Spur 12828",
+  "codi_postal": 18574,
+  "localitat_id": {
+    "$oid": "6449419478f7960090a6834f"
+  },
+  "provincia_id": {
+    "$oid": "644941cc78f7960090a68354"
+  }
+},{
+  "_id": {
+    "$oid": "6449483778f7960090a68396"
+  },
+  "adreça": "Arthur Hill 697",
+  "codi_postal": 39088,
+  "localitat_id": {
+    "$oid": "644941a078f7960090a68350"
+  },
+  "provincia_id": {
+    "$oid": "644941d978f7960090a68355"
+  }
+}]

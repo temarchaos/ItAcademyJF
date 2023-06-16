@@ -1,0 +1,83 @@
+{
+	"info": {
+		"_postman_id": "590c6e04-825f-48d6-9217-67900a5f2a9f",
+		"name": "Projecte Gradle",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "HelloWorld Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{servidor}}:{{port}}/HelloWorld",
+					"host": [
+						"{{servidor}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"HelloWorld"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "HelloWorld Name Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{servidor}}:{{port}}/HelloWorld?nom=Jordi",
+					"host": [
+						"{{servidor}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"HelloWorld"
+					],
+					"query": [
+						{
+							"key": "nom",
+							"value": "Jordi"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "servidor",
+			"value": "http://localhost",
+			"type": "default"
+		},
+		{
+			"key": "port",
+			"value": "9001",
+			"type": "default"
+		}
+	]
+}

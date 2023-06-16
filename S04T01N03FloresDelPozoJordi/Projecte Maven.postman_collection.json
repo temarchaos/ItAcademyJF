@@ -1,0 +1,78 @@
+{
+	"info": {
+		"_postman_id": "00a47bf1-e055-4c39-9ecf-6daff989d8a3",
+		"name": "Projecte Maven",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "HelloWorld Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{servidor}}:{{port}}/HelloWorld",
+					"host": [
+						"{{servidor}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"HelloWorld"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "HelloWorld Name Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{servidor}}:{{port}}/HelloWorld2/Jordi",
+					"host": [
+						"{{servidor}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"HelloWorld2",
+						"Jordi"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "servidor",
+			"value": "http://localhost",
+			"type": "default"
+		},
+		{
+			"key": "port",
+			"value": "9000",
+			"type": "default"
+		}
+	]
+}

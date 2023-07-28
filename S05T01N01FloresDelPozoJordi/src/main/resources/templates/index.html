@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sucursal Management System</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container my-2">
+        <h1>Llista de Sucursals</h1>
+        <a th:href="@{/sucursal/newSucursal}" class="btn btn-primary btn-sm mb-3"> Afegir Sucursal </a>
+        <table border="1" class="table table-striped table-responsive-md">
+                <tr>
+                	<th>Id</th>
+                    <th>Nom</th>
+                    <th>País</th>
+                    <th>Tipus</th>
+                    <th>Accions</th>
+                </tr>
+                <tr th:each="sucursal : ${sucursals}">
+                    <td>
+                   		<a th:href="@{/sucursal/getOne/{id}(id=${sucursal.pk_SucursalID})}" th:text="${sucursal.pk_SucursalID}"></a>
+                    </td>
+                	<td th:text="${sucursal.nomSucursal}"></td>
+                    <td th:text="${sucursal.paisSucursal}"></td>
+                    <td th:text="${sucursal.tipusSucursal}"></td>
+                    <td>
+                    	<a th:href="@{/sucursal/update/{id}(id=${sucursal.pk_SucursalID})}" class="btn btn-primary">Modificar</a>
+                    	<a th:href="@{/sucursal/delete/{id}(id=${sucursal.pk_SucursalID})}" class="btn btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+        </table>
+    </div>
+</body>
+
+</html>

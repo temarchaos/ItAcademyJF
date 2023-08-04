@@ -17,7 +17,7 @@ public class Player {
 	@Column(name = "player_name")
 	private String playerName;
 	
-	@Column(name = "registration_date")
+	@Column(name = "registration_date", columnDefinition = "DATE")
 	private LocalDate registrationDate;
 	
 	@OneToMany(mappedBy = "player", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

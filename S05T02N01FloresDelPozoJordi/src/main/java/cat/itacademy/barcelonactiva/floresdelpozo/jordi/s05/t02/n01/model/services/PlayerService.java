@@ -1,5 +1,6 @@
 package cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +21,7 @@ public class PlayerService {
 	}
 	
 	public Player addPlayer(Player player) {
+		player.setRegistrationDate(LocalDate.now());
 		Player newPlayer = playerRepository.save(player);
 		return newPlayer;
 	}

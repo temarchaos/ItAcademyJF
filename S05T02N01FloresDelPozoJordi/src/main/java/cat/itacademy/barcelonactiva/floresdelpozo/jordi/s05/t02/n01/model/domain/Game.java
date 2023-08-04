@@ -3,10 +3,27 @@ package cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.domai
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "games")
 public class Game {
 	private static final int NUM_DICES = 2;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int pk_GameID;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "player_id")
+    private Player player;
+	
+	@ElementCollection
+	@CollectionTable(name = "game_dices", joinColumns = @JoinColumn(name = "game_id"))
+    @Column(name = "dice_value")
 	private List<Integer> dicesValues;
+	
+	@Column(name = "won")
 	private boolean won;
 	
 	public Game(List<Integer> dicesValues, boolean won) {

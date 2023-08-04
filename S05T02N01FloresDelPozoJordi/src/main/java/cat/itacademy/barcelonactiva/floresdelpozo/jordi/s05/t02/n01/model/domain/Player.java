@@ -1,6 +1,8 @@
 package cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.domain;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.*;
 
@@ -18,14 +20,18 @@ public class Player {
 	@Column(name = "registration_date")
 	private LocalDate registrationDate;
 	
+	@OneToMany(mappedBy = "player", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Game> games = new ArrayList<>();
+	
 	public Player() {
 		
 	}
 
-	public Player(int pk_PlayerID, String playerName, LocalDate registrationDate) {
+	public Player(int pk_PlayerID, String playerName, LocalDate registrationDate, List<Game> games) {
 		this.pk_PlayerID = pk_PlayerID;
 		this.playerName = playerName;
 		this.registrationDate = registrationDate;
+		this.games = games;
 	}
 
 	public int getPk_PlayerID() {
@@ -51,10 +57,18 @@ public class Player {
 	public void setRegistrationDate(LocalDate registrationDate) {
 		this.registrationDate = registrationDate;
 	}
+	
+	public List<Game> getGames(){
+		return games;
+	}
+
+	public void setGames(List<Game> games) {
+		this.games = games;
+	}
 
 	@Override
 	public String toString() {
 		return "Player [pk_PlayerID=" + pk_PlayerID + ", playerName=" + playerName + ", registrationDate="
-				+ registrationDate + "]";
+				+ registrationDate + ", games=" + games + "]";
 	}
 }

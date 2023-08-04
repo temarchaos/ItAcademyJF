@@ -27,19 +27,14 @@ public class Player {
 		
 	}
 
-	public Player(int pk_PlayerID, String playerName, LocalDate registrationDate, List<Game> games) {
+	public Player(int pk_PlayerID, String playerName, LocalDate registrationDate) {
 		this.pk_PlayerID = pk_PlayerID;
 		this.playerName = playerName;
 		this.registrationDate = registrationDate;
-		this.games = games;
 	}
 
 	public int getPk_PlayerID() {
 		return pk_PlayerID;
-	}
-
-	public void setPk_PlayerID(int pk_PlayerID) {
-		this.pk_PlayerID = pk_PlayerID;
 	}
 
 	public String getPlayerName() {
@@ -53,7 +48,7 @@ public class Player {
 	public LocalDate getRegistrationDate() {
 		return registrationDate;
 	}
-
+	
 	public void setRegistrationDate(LocalDate registrationDate) {
 		this.registrationDate = registrationDate;
 	}

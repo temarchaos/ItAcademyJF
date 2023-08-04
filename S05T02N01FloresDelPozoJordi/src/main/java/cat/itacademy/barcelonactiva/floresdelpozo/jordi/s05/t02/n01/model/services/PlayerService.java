@@ -45,7 +45,7 @@ public class PlayerService {
 		return optionalPlayer.orElse(null);
 	}
 	
-	public List<Player> getAllPlayers(){
+	public List<Player> getAllPlayers() {
 		return playerRepository.findAll();
 	}
 }

@@ -1,14 +1,16 @@
-package cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.domain;
+	package cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "games")
 public class Game {
-	private static final int NUM_DICES = 2;
+	public static final int NUM_DICES = 2;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,6 +18,7 @@ public class Game {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "player_id")
+	@JsonIgnore
     private Player player;
 	
 	@ElementCollection
@@ -26,6 +29,10 @@ public class Game {
 	@Column(name = "won")
 	private boolean won;
 	
+	public Game() {
+		
+	}
+	
 	public Game(List<Integer> dicesValues, boolean won) {
 		if (dicesValues.size() != NUM_DICES) {
             throw new IllegalArgumentException("El nombre de valors de daus ha de ser igual a " + NUM_DICES);
@@ -33,6 +40,18 @@ public class Game {
 		
 		this.dicesValues = new ArrayList<>(dicesValues);
 		this.won = won;
+	}
+	
+	public int getPk_GameID() {
+		return pk_GameID;
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
 	}
 
 	public List<Integer> getDicesValues() {

@@ -4,13 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.domain.Game;
 import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.domain.Player;
+import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.services.GameService;
 import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.services.PlayerService;
 
 @RestController
@@ -18,18 +21,16 @@ import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.servic
 @CrossOrigin(origins = "http://localhost:8080")
 public class PlayerController {
 
-	private PlayerService playerService;
-	
 	@Autowired
-	public PlayerController(PlayerService playerService) {
-		this.playerService = playerService;
-	}
+	private PlayerService playerService;
+	@Autowired
+	private GameService gameService;
 	
 	// POST: /players: crea un jugador/a. 
 	@PostMapping("")
 	public ResponseEntity<Player> addPlayer(@RequestBody Player player) {
-		Player createdPlayer = playerService.addPlayer(player);
-		return new ResponseEntity<>(createdPlayer, HttpStatus.CREATED);
+		Player newPlayer = playerService.addPlayer(player);
+		return new ResponseEntity<>(newPlayer, HttpStatus.CREATED);
 	}
 	
 	// PUT /players: modifica el nom del jugador/a.
@@ -45,6 +46,16 @@ public class PlayerController {
 	}
 	
 	// POST /players/{id}/games/ : un jugador/a específic realitza una tirada dels daus.
+	@PostMapping("/{id}/games/")
+	public ResponseEntity<Game> addGameToPlayer(@PathVariable("id") int playerId, @RequestBody Game game) {
+		Player player = playerService.getPlayerById(playerId);
+        if (player != null) {
+            Game newGame = gameService.addGameToPlayer(player, game);
+            return new ResponseEntity<>(newGame, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+	}
 	
 	// DELETE /players/{id}/games: elimina les tirades del jugador/a.
 	

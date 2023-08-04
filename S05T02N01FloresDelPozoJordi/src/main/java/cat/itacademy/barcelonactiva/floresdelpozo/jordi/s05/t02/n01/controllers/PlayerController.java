@@ -36,7 +36,12 @@ public class PlayerController {
 	@PutMapping("")
 	public ResponseEntity<Player> updatePlayer(@RequestBody Player player) {
 		Player updatedPlayer = playerService.updatePlayer(player);
-		return new ResponseEntity<>(updatedPlayer, HttpStatus.OK);
+		
+		if (player != null) {
+			return new ResponseEntity<>(updatedPlayer, HttpStatus.OK);			
+		}else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	// POST /players/{id}/games/ : un jugador/a específic realitza una tirada dels daus.

@@ -22,13 +22,18 @@ public class PlayerService {
 	
 	public Player addPlayer(Player player) {
 		player.setRegistrationDate(LocalDate.now());
-		Player newPlayer = playerRepository.save(player);
-		return newPlayer;
+		return playerRepository.save(player);
 	}
 	
 	public Player updatePlayer(Player player) {
-		Player updatedPlayer = playerRepository.save(player);
-		return updatedPlayer;
+		Optional<Player> optionalPlayer = playerRepository.findById(player.getPk_PlayerID());
+		if (optionalPlayer.isPresent()) {
+			Player updatedPlayer = optionalPlayer.get();
+			updatedPlayer.setPlayerName(player.getPlayerName());
+			return playerRepository.save(updatedPlayer);
+		}
+		
+		return null;
 	}
 	
 	public void deletePlayerById(int id) {

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.domain.Player;
+import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.domain.exception.DuplicatePlayerNameException;
 import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.repository.PlayerRepository;
 
 @Service
@@ -21,6 +22,11 @@ public class PlayerService {
 	}
 	
 	public Player addPlayer(Player player) {
+		String playerName = player.getPlayerName();
+		if (playerRepository.findByPlayerName(playerName).isPresent()) {
+			throw new DuplicatePlayerNameException("El nom del jugador ja existeix: " + playerName);
+		}
+		
 		player.setRegistrationDate(LocalDate.now());
 		return playerRepository.save(player);
 	}

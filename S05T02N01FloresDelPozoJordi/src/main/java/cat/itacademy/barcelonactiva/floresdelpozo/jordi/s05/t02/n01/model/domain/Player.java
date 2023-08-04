@@ -7,14 +7,14 @@ import java.util.List;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "players")
+@Table(name = "players", uniqueConstraints = @UniqueConstraint(columnNames = "player_name"))
 public class Player {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int pk_PlayerID;
 	
-	@Column(name = "player_name")
+	@Column(name = "player_name", unique = true)
 	private String playerName;
 	
 	@Column(name = "registration_date", columnDefinition = "DATE")

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.domain.Game;
 import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.domain.Player;
+import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.domain.exception.DuplicatePlayerNameException;
 import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.services.GameService;
 import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.services.PlayerService;
 
@@ -28,9 +29,13 @@ public class PlayerController {
 	
 	// POST: /players: crea un jugador/a. 
 	@PostMapping("")
-	public ResponseEntity<Player> addPlayer(@RequestBody Player player) {
-		Player newPlayer = playerService.addPlayer(player);
-		return new ResponseEntity<>(newPlayer, HttpStatus.CREATED);
+	public ResponseEntity<Object> addPlayer(@RequestBody Player player) {
+		try {
+			Player newPlayer = playerService.addPlayer(player);
+			return new ResponseEntity<>(newPlayer, HttpStatus.CREATED);
+		} catch (DuplicatePlayerNameException e) {
+			return new ResponseEntity<Object>("Error: " + e.getMessage(), HttpStatus.CONFLICT);
+		}
 	}
 	
 	// PUT /players: modifica el nom del jugador/a.

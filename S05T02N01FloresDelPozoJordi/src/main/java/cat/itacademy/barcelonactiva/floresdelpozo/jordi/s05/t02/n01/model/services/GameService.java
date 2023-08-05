@@ -41,4 +41,8 @@ public class GameService {
 	public void deleteAllGamesByPlayer(Player player) {
         gameRepository.deleteAllByPlayer(player);
     }
+	
+	public List<Game> getAllGamesByPlayer(Player player) {
+		return gameRepository.getAllByPlayer(player);
+	}
 }

@@ -1,10 +1,13 @@
 package cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -65,7 +68,7 @@ public class PlayerController {
 	
 	// DELETE /players/{id}/games: elimina les tirades del jugador/a.
 	@DeleteMapping("/{id}/games")
-	public ResponseEntity<Object> deletedeleteAllGamesByPlayer(@PathVariable("id") int playerId) {
+	public ResponseEntity<Object> deleteAllGamesByPlayer(@PathVariable("id") int playerId) {
 		Player player = playerService.getPlayerById(playerId);
 		if (player != null) {
             gameService.deleteAllGamesByPlayer(player);
@@ -78,10 +81,25 @@ public class PlayerController {
 	// GET /players/: retorna el llistat de tots  els jugadors/es del sistema amb el seu  percentatge mitjà d’èxits.
 	
 	// GET /players/{id}/games: retorna el llistat de jugades per un jugador/a.
+	@GetMapping("/{id}/games")
+	public ResponseEntity<Object> getAllGamesByPlayer(@PathVariable("id") int playerId) {
+		Player player = playerService.getPlayerById(playerId);
+		if (player != null) {
+			List<Game> allGames = gameService.getAllGamesByPlayer(player);
+			if (!allGames.isEmpty()) {
+				return new ResponseEntity<>(allGames.toString(), HttpStatus.OK);
+			}else {
+				return new ResponseEntity<>("El jugador no ha realitzat partides", HttpStatus.OK);
+			}
+			
+		}else {
+			return new ResponseEntity<>("No s'ha trobat el jugador", HttpStatus.NOT_FOUND);
+		}
+	}
 	
 	// GET /players/ranking: retorna el ranking mig de tots els jugadors/es del sistema. És a dir, el  percentatge mitjà d’èxits.
 	
 	// GET /players/ranking/loser: retorna el jugador/a  amb pitjor percentatge d’èxit.
 	
-	// GET /players/ranking/winner: retorna el  jugador amb pitjor percentatge d’èxit.
+	// GET /players/ranking/winner: retorna el  jugador amb millor percentatge d’èxit.
 }

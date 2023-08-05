@@ -1,5 +1,7 @@
 package cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.controllers;
 
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,8 @@ public class PlayerController {
 	private PlayerService playerService;
 	@Autowired
 	private GameService gameService;
+	
+	private DecimalFormat df = new DecimalFormat("#.##");
 	
 	// POST: /players: crea un jugador/a. 
 	@PostMapping("")
@@ -108,8 +112,55 @@ public class PlayerController {
 	}
 	
 	// GET /players/ranking: retorna el ranking mig de tots els jugadors/es del sistema. És a dir, el  percentatge mitjà d’èxits.
+	@GetMapping("/ranking")
+	public ResponseEntity<Object> getRanking() {
+		List<PlayerDTO> allPlayersDTO = playerService.getRanking();
+		List<String> playerWithNameAndWinPercentage = new ArrayList<>();
+		
+		if (!allPlayersDTO.isEmpty()) {
+			allPlayersDTO.forEach(playerDTO ->{
+				String playerName = playerDTO.getPlayerName();
+				double winPercentage = playerDTO.getWinPercentage();
+				String playerInfo = "Name: " + playerName + ", Win Percentage: " + df.format(winPercentage) + "%";
+				playerWithNameAndWinPercentage.add(playerInfo);
+			});
+			return new ResponseEntity<>(playerWithNameAndWinPercentage, HttpStatus.OK);
+		}else {
+			return new ResponseEntity<>("No hi ha jugadors en la base de dades", HttpStatus.OK);
+		}
+	}
 	
 	// GET /players/ranking/loser: retorna el jugador/a  amb pitjor percentatge d’èxit.
+	@GetMapping("/ranking/loser")
+	public ResponseEntity<Object> getLoserRanking() {
+		List<PlayerDTO> allPlayersDTO = playerService.getRanking();
+		
+		if (!allPlayersDTO.isEmpty()) {
+			PlayerDTO loserPlayerDTO = allPlayersDTO.get(allPlayersDTO.size()-1);
+			String playerName = loserPlayerDTO.getPlayerName();
+			double winPercentage = loserPlayerDTO.getWinPercentage();
+			String playerInfo = "Name: " + playerName + ", Win Percentage: " + df.format(winPercentage) + "%";
+			
+			return new ResponseEntity<>(playerInfo, HttpStatus.OK);
+		}else {
+			return new ResponseEntity<>("No hi ha jugadors en la base de dades", HttpStatus.OK);
+		}
+	}
 	
 	// GET /players/ranking/winner: retorna el  jugador amb millor percentatge d’èxit.
+	@GetMapping("/ranking/winner")
+	public ResponseEntity<Object> getWinnerRanking() {
+		List<PlayerDTO> allPlayersDTO = playerService.getRanking();
+		
+		if (!allPlayersDTO.isEmpty()) {
+			PlayerDTO loserPlayerDTO = allPlayersDTO.get(0);
+			String playerName = loserPlayerDTO.getPlayerName();
+			double winPercentage = loserPlayerDTO.getWinPercentage();
+			String playerInfo = "Name: " + playerName + ", Win Percentage: " + df.format(winPercentage) + "%";
+			
+			return new ResponseEntity<>(playerInfo, HttpStatus.OK);
+		}else {
+			return new ResponseEntity<>("No hi ha jugadors en la base de dades", HttpStatus.OK);
+		}
+	}
 }

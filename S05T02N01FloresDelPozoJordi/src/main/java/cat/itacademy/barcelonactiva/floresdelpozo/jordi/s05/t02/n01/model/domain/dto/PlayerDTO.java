@@ -6,7 +6,7 @@ import java.util.List;
 
 import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.domain.Game;
 
-public class PlayerDTO {
+public class PlayerDTO implements Comparable<PlayerDTO>{
 	private int pk_PlayerID;
     private String playerName;
     private LocalDate registrationDate;
@@ -73,5 +73,15 @@ public class PlayerDTO {
 		DecimalFormat df = new DecimalFormat("#.##");
 		return "- PlayerDTO [pk_PlayerID=" + pk_PlayerID + ", playerName=" + playerName + ", registrationDate="
 				+ registrationDate + ",\ngames=" + games + ",\n\t winPercentage=" + df.format(winPercentage)+"%" + "]\n";
+	}
+
+	@Override
+	public int compareTo(PlayerDTO other) {
+		int winPercentageOrdered = Double.compare(other.getWinPercentage(), this.getWinPercentage());
+		if (winPercentageOrdered != 0) {
+			return winPercentageOrdered;			
+		}
+		
+		return this.getRegistrationDate().compareTo(other.getRegistrationDate());
 	}
 }

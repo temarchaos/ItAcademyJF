@@ -2,6 +2,7 @@ package cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.servi
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,9 +59,16 @@ public class PlayerService {
 			double winPercentage = (totalGames > 0) ? ((double) wonGames / totalGames) * 100 : 0.0;
 			PlayerDTO playerDTO = new PlayerDTO(player.getPk_PlayerID(), player.getPlayerName(),
                     player.getRegistrationDate(), player.getGames(), winPercentage);
+			
 			allPlayersDTO.add(playerDTO);
 		}
 		
+		return allPlayersDTO;
+	}
+	
+	public List<PlayerDTO> getRanking(){
+		List<PlayerDTO> allPlayersDTO = getAllPlayersWithWinPercentage();
+		Collections.sort(allPlayersDTO);
 		return allPlayersDTO;
 	}
 	

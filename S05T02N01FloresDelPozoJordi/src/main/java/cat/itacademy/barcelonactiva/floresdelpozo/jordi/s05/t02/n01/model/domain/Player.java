@@ -36,6 +36,10 @@ public class Player {
 	public int getPk_PlayerID() {
 		return pk_PlayerID;
 	}
+	
+	public void setPk_PlayerID(int pk_PlayerID) {
+		this.pk_PlayerID = pk_PlayerID;
+	}
 
 	public String getPlayerName() {
 		return playerName;

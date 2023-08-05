@@ -45,6 +45,10 @@ public class Game {
 	public int getPk_GameID() {
 		return pk_GameID;
 	}
+	
+	public void setPk_GameID(int pk_GameID) {
+		this.pk_GameID = pk_GameID;
+	}
 
 	public Player getPlayer() {
 		return player;

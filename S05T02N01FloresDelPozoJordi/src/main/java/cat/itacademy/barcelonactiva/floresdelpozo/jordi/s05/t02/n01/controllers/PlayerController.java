@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -40,29 +41,39 @@ public class PlayerController {
 	
 	// PUT /players: modifica el nom del jugador/a.
 	@PutMapping("")
-	public ResponseEntity<Player> updatePlayer(@RequestBody Player player) {
+	public ResponseEntity<Object> updatePlayer(@RequestBody Player player) {
 		Player updatedPlayer = playerService.getPlayerById(player.getPk_PlayerID());
 		if (updatedPlayer != null) {
 			updatedPlayer = playerService.updatePlayer(player);
 			return new ResponseEntity<>(updatedPlayer, HttpStatus.OK);			
 		}else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>("No s'ha trobat el jugador", HttpStatus.NOT_FOUND);
 		}
 	}
 	
 	// POST /players/{id}/games/ : un jugador/a específic realitza una tirada dels daus.
 	@PostMapping("/{id}/games/")
-	public ResponseEntity<Game> addGameToPlayer(@PathVariable("id") int playerId, @RequestBody Game game) {
+	public ResponseEntity<Object> addGameToPlayer(@PathVariable("id") int playerId, @RequestBody Game game) {
 		Player player = playerService.getPlayerById(playerId);
         if (player != null) {
             Game newGame = gameService.addGameToPlayer(player, game);
             return new ResponseEntity<>(newGame, HttpStatus.CREATED);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("No s'ha trobat el jugador", HttpStatus.NOT_FOUND);
         }
 	}
 	
 	// DELETE /players/{id}/games: elimina les tirades del jugador/a.
+	@DeleteMapping("/{id}/games")
+	public ResponseEntity<Object> deletedeleteAllGamesByPlayer(@PathVariable("id") int playerId) {
+		Player player = playerService.getPlayerById(playerId);
+		if (player != null) {
+            gameService.deleteAllGamesByPlayer(player);
+            return new ResponseEntity<>("Totes les partides del jugador: " + player.getPlayerName() +", han estat eliminades", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("No s'ha trobat el jugador", HttpStatus.NOT_FOUND);
+        }
+	}
 	
 	// GET /players/: retorna el llistat de tots  els jugadors/es del sistema amb el seu  percentatge mitjà d’èxits.
 	

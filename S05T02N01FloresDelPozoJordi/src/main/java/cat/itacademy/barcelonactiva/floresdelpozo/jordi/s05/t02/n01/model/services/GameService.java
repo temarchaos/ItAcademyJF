@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.domain.Game;
 import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.domain.Player;
@@ -35,4 +36,9 @@ public class GameService {
 		
 		return null;
 	}
+	
+	@Transactional
+	public void deleteAllGamesByPlayer(Player player) {
+        gameRepository.deleteAllByPlayer(player);
+    }
 }

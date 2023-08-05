@@ -80,6 +80,6 @@ public class Game {
 
 	@Override
 	public String toString() {
-		return "Game [dicesValues=" + dicesValues + ", won=" + won + "]";
+		return "\nGame [dicesValues=" + dicesValues + ", won=" + won + "]";
 	}
 }

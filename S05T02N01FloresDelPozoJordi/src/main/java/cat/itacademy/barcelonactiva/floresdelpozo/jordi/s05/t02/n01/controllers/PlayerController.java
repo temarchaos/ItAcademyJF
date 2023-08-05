@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.domain.Game;
 import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.domain.Player;
+import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.domain.dto.PlayerDTO;
 import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.domain.exception.DuplicatePlayerNameException;
 import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.services.GameService;
 import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.services.PlayerService;
@@ -79,6 +80,15 @@ public class PlayerController {
 	}
 	
 	// GET /players/: retorna el llistat de tots  els jugadors/es del sistema amb el seu  percentatge mitjà d’èxits.
+	@GetMapping("/")
+	public ResponseEntity<Object> getAllPlayersWithWinPercentage(){
+		List<PlayerDTO> allPlayersDTO = playerService.getAllPlayersWithWinPercentage();
+		if (!allPlayersDTO.isEmpty()) {
+			return new ResponseEntity<>(allPlayersDTO.toString(), HttpStatus.OK);
+		}else {
+			return new ResponseEntity<>("No hi ha jugadors en la base de dades", HttpStatus.OK);
+		}
+	}
 	
 	// GET /players/{id}/games: retorna el llistat de jugades per un jugador/a.
 	@GetMapping("/{id}/games")

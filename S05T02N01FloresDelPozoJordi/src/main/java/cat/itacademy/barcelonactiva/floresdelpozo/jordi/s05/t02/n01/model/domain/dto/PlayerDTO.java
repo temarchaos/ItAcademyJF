@@ -1,5 +1,6 @@
 package cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.domain.dto;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -15,6 +16,17 @@ public class PlayerDTO {
     public PlayerDTO() {
     	
     }
+
+	public PlayerDTO(int pk_PlayerID, String playerName, LocalDate registrationDate, List<Game> games,
+			double winPercentage) {
+		this.pk_PlayerID = pk_PlayerID;
+		this.playerName = playerName;
+		this.registrationDate = registrationDate;
+		this.games = games;
+		this.winPercentage = winPercentage;
+	}
+
+
 
 	public int getPk_PlayerID() {
 		return pk_PlayerID;
@@ -58,7 +70,8 @@ public class PlayerDTO {
 
 	@Override
 	public String toString() {
-		return "PlayerDTO [pk_PlayerID=" + pk_PlayerID + ", playerName=" + playerName + ", registrationDate="
-				+ registrationDate + ", games=" + games + ", winPercentage=" + winPercentage + "]";
+		DecimalFormat df = new DecimalFormat("#.##");
+		return "- PlayerDTO [pk_PlayerID=" + pk_PlayerID + ", playerName=" + playerName + ", registrationDate="
+				+ registrationDate + ",\ngames=" + games + ",\n\t winPercentage=" + df.format(winPercentage)+"%" + "]\n";
 	}
 }

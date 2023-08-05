@@ -34,16 +34,16 @@ public class PlayerController {
 			Player newPlayer = playerService.addPlayer(player);
 			return new ResponseEntity<>(newPlayer, HttpStatus.CREATED);
 		} catch (DuplicatePlayerNameException e) {
-			return new ResponseEntity<Object>("Error: " + e.getMessage(), HttpStatus.CONFLICT);
+			return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.CONFLICT);
 		}
 	}
 	
 	// PUT /players: modifica el nom del jugador/a.
 	@PutMapping("")
 	public ResponseEntity<Player> updatePlayer(@RequestBody Player player) {
-		Player updatedPlayer = playerService.updatePlayer(player);
-		
-		if (player != null) {
+		Player updatedPlayer = playerService.getPlayerById(player.getPk_PlayerID());
+		if (updatedPlayer != null) {
+			updatedPlayer = playerService.updatePlayer(player);
 			return new ResponseEntity<>(updatedPlayer, HttpStatus.OK);			
 		}else {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);

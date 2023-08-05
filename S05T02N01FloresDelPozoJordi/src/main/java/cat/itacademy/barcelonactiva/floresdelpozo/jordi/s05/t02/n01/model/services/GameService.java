@@ -26,6 +26,10 @@ public class GameService {
 				throw new IllegalArgumentException("El nombre de valors de daus ha de ser igual a " + Game.NUM_DICES);
 			}
 			game.setPlayer(player);
+			
+			int res = diceValues.stream().mapToInt(Integer::intValue).sum();
+			game.setWon(res == 7);
+			
 			return gameRepository.save(game);
 		}
 		

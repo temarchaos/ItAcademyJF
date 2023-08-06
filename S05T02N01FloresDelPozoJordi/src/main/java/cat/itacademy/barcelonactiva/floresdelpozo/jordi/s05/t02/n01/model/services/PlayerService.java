@@ -75,4 +75,9 @@ public class PlayerService {
 	public List<Player> getAllPlayers() {
 		return playerRepository.findAll();
 	}
+	
+	public Player getPlayerByName(String playerName) {
+		Optional<Player> optionalPlayer = playerRepository.findByPlayerName(playerName);
+		return optionalPlayer.orElse(null);
+	}
 }

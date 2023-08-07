@@ -17,7 +17,7 @@ import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.reposi
 
 @Service
 public class PlayerService {
-
+	
 	@Autowired
 	private PlayerRepository playerRepository;
 	

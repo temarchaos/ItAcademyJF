@@ -11,10 +11,12 @@
 	    <div class="container">
 	        <div class="logo">Dice Game</div>
 	        <h1>Iniciar Sessió</h1>
-	        <form th:action="@{/players/login}" method="post">
+	        <form th:action="@{/dicegame/login}" method="post">
 	            <div class="form-group">
-	                <input type="text" id="playerName" name="playerName" placeholder="NOM DE JUGADOR" required>
-	                <label for="playerName">NOM DE JUGADOR</label>
+	                <input type="text" id="username" name="username" placeholder="NOM DE JUGADOR" required>
+	                <label for="username">NOM DE JUGADOR</label>
+	                <input type="password" id="password" name="password" placeholder="PASSWORD" required>
+	                <label for="password">PASSWORD</label> 
 	            	<button class="submit-button" type="submit">></button>
 	            </div>
 	            <div th:if="${error}" class="error-message">
@@ -23,7 +25,7 @@
 	        </form>
 	        <hr class="divider">
 	        <div class="form-group">
-	        	<a th:href="@{/players/newPlayer}" class="a-button">Crear un Jugador</a>
+	        	<a th:href="@{/dicegame/newPlayer}" class="a-button">Crear un Jugador</a>
 	    	</div>
 	    </div>
     </div>

@@ -7,49 +7,79 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.domain.Game;
 import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.domain.Player;
+import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.domain.AuthResponse;
 import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.domain.dto.PlayerDTO;
 import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.domain.exception.DuplicatePlayerNameException;
 import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.services.GameService;
 import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.services.PlayerService;
+import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.security.JwtUtils;
 
 @Controller
 @RequestMapping("/players")
 @CrossOrigin(origins = "http://localhost:8080")
 public class PlayerController {
-
+	
+	@Autowired
+    private JwtUtils jwtUtils;
+	
+	@Autowired
+	private AuthenticationManager authenticationManager;
+	
 	@Autowired
 	private PlayerService playerService;
+	
 	@Autowired
 	private GameService gameService;
 	
 	private DecimalFormat df = new DecimalFormat("#.##");
 	
-	private Player currentPlayer;
+	//private Player currentPlayer;
 	
 	// POST: /players: crea un jugador/a. 
 	@PostMapping("")
 	public ResponseEntity<Object> addPlayer(@RequestBody Player player) {
 		try {
 			Player newPlayer = playerService.addPlayer(player);
-			return new ResponseEntity<>(newPlayer, HttpStatus.CREATED);
-		} catch (DuplicatePlayerNameException e) {
+			String token = jwtUtils.getToken(newPlayer);
+			AuthResponse authResponse = new AuthResponse(newPlayer, token);
+			
+			return new ResponseEntity<>(authResponse, HttpStatus.CREATED);
+		}catch (DuplicatePlayerNameException e) {
 			return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.CONFLICT);
 		}
+	}
+	
+	// POST: /login: login per obtenir token
+	@PostMapping("/login")
+	public ResponseEntity<Object> login(@RequestBody Player player){
+		try {
+			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(player.getUsername(), player.getPassword()));
+			UserDetails user = playerService.getPlayerByUsername(player.getUsername());
+			String token = jwtUtils.getToken(user);
+			
+			Player currentPlayer = playerService.getPlayerByUsername(player.getUsername());
+			
+			AuthResponse authResponse = new AuthResponse(currentPlayer, token);
+			return new ResponseEntity<>(authResponse, HttpStatus.OK);
+		} catch (AuthenticationException e) {
+	        return new ResponseEntity<>("Error de autenticació: " + e.getMessage(), HttpStatus.UNAUTHORIZED);
+	    }
 	}
 	
 	// PUT /players: modifica el nom del jugador/a.
@@ -58,7 +88,7 @@ public class PlayerController {
 		Player updatedPlayer = playerService.getPlayerById(player.getPk_PlayerID());
 		if (updatedPlayer != null) {
 			updatedPlayer = playerService.updatePlayer(player);
-			return new ResponseEntity<>(updatedPlayer, HttpStatus.OK);			
+			return new ResponseEntity<>(updatedPlayer, HttpStatus.OK);
 		}else {
 			return new ResponseEntity<>("No s'ha trobat el jugador", HttpStatus.NOT_FOUND);
 		}
@@ -82,7 +112,7 @@ public class PlayerController {
 		Player player = playerService.getPlayerById(playerId);
 		if (player != null) {
             gameService.deleteAllGamesByPlayer(player);
-            return new ResponseEntity<>("Totes les partides del jugador: " + player.getPlayerName() +", han estat eliminades", HttpStatus.OK);
+            return new ResponseEntity<>("Totes les partides del jugador: " + player.getUsername() +", han estat eliminades", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("No s'ha trobat el jugador", HttpStatus.NOT_FOUND);
         }
@@ -124,7 +154,7 @@ public class PlayerController {
 		
 		if (!allPlayersDTO.isEmpty()) {
 			allPlayersDTO.forEach(playerDTO ->{
-				String playerName = playerDTO.getPlayerName();
+				String playerName = playerDTO.getUsername();
 				double winPercentage = playerDTO.getWinPercentage();
 				String playerInfo = "Name: " + playerName + ", Win Percentage: " + df.format(winPercentage) + "%";
 				playerWithNameAndWinPercentage.add(playerInfo);
@@ -142,7 +172,7 @@ public class PlayerController {
 		
 		if (!allPlayersDTO.isEmpty()) {
 			PlayerDTO loserPlayerDTO = allPlayersDTO.get(allPlayersDTO.size()-1);
-			String playerName = loserPlayerDTO.getPlayerName();
+			String playerName = loserPlayerDTO.getUsername();
 			double winPercentage = loserPlayerDTO.getWinPercentage();
 			String playerInfo = "Name: " + playerName + ", Win Percentage: " + df.format(winPercentage) + "%";
 			
@@ -159,7 +189,7 @@ public class PlayerController {
 		
 		if (!allPlayersDTO.isEmpty()) {
 			PlayerDTO loserPlayerDTO = allPlayersDTO.get(0);
-			String playerName = loserPlayerDTO.getPlayerName();
+			String playerName = loserPlayerDTO.getUsername();
 			double winPercentage = loserPlayerDTO.getWinPercentage();
 			String playerInfo = "Name: " + playerName + ", Win Percentage: " + df.format(winPercentage) + "%";
 			
@@ -167,63 +197,5 @@ public class PlayerController {
 		}else {
 			return new ResponseEntity<>("No hi ha jugadors en la base de dades", HttpStatus.OK);
 		}
-	}
-	
-	// Methods for thymeleaf
-	
-	@GetMapping("/player-login")
-	public String viewPlayerLogin (Model model) {
-		return "index";
-	}
-	
-	@GetMapping("/newPlayer")
-	public String viewNewPlayer (Model model) {
-		return "new_player";
-	}
-	
-	@PostMapping("/login")
-	public String login(@ModelAttribute Player existingPlayer, RedirectAttributes redirectAttributes) {
-		currentPlayer = playerService.getPlayerByName(existingPlayer.getPlayerName());
-		if (currentPlayer != null) {
-			return "redirect:/players/player";			
-		}else {
-			redirectAttributes.addFlashAttribute("error", "El jugador no existeix");
-			return "redirect:/players/player-login";
-		}
-	}
-	
-	@PostMapping("/create-player")
-	public String createPlayer(@ModelAttribute Player newPlayer, RedirectAttributes redirectAttributes) {
-		try {
-			Player createdPlayer = playerService.addPlayer(newPlayer);
-			currentPlayer = createdPlayer;
-			return "redirect:/players/player";
-		} catch(DuplicatePlayerNameException e) {
-			redirectAttributes.addFlashAttribute("error", e.getMessage());
-			return "redirect:/players/newPlayer";
-		}
-	}
-	
-	@GetMapping("/player")
-	public String getPlayer(Model model) {
-		List<PlayerDTO> ranking = playerService.getRanking();
-		PlayerDTO winnerPlayer = ranking.get(0);
-		PlayerDTO loserPlayer = ranking.get(ranking.size()-1);
-		List<Game> allGames = gameService.getAllGamesByPlayer(currentPlayer);
-		
-		model.addAttribute("currentPlayer", currentPlayer);
-		model.addAttribute("ranking", ranking);
-		model.addAttribute("winnerPlayer", winnerPlayer);
-		model.addAttribute("loserPlayer", loserPlayer);
-		model.addAttribute("allGames", allGames);
-		
-		return "player";
-	}
-	
-	@PostMapping("/createGame")
-	public String createGameToPlayer(@ModelAttribute Game game) {
-		gameService.addGameToPlayer(currentPlayer, game);
-		
-		return "redirect:/players/player";
 	}
 }

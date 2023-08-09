@@ -5,28 +5,31 @@ import java.time.LocalDate;
 import java.util.List;
 
 import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.domain.Game;
+import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.domain.Role;
 
 public class PlayerDTO implements Comparable<PlayerDTO>{
 	private int pk_PlayerID;
-    private String playerName;
+    private String username;
+    private String password;
     private LocalDate registrationDate;
     private List<Game> games;
+    private Role role;
     private double winPercentage;
     
     public PlayerDTO() {
     	
     }
 
-	public PlayerDTO(int pk_PlayerID, String playerName, LocalDate registrationDate, List<Game> games,
-			double winPercentage) {
+	public PlayerDTO(int pk_PlayerID, String username, String password, LocalDate registrationDate, List<Game> games,
+			Role role, double winPercentage) {
 		this.pk_PlayerID = pk_PlayerID;
-		this.playerName = playerName;
+		this.username = username;
+		this.password = password;
 		this.registrationDate = registrationDate;
 		this.games = games;
+		this.role = role;
 		this.winPercentage = winPercentage;
 	}
-
-
 
 	public int getPk_PlayerID() {
 		return pk_PlayerID;
@@ -36,12 +39,20 @@ public class PlayerDTO implements Comparable<PlayerDTO>{
 		this.pk_PlayerID = pk_PlayerID;
 	}
 
-	public String getPlayerName() {
-		return playerName;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setPlayerName(String playerName) {
-		this.playerName = playerName;
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public LocalDate getRegistrationDate() {
@@ -60,6 +71,14 @@ public class PlayerDTO implements Comparable<PlayerDTO>{
 		this.games = games;
 	}
 
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
 	public double getWinPercentage() {
 		return winPercentage;
 	}
@@ -71,8 +90,9 @@ public class PlayerDTO implements Comparable<PlayerDTO>{
 	@Override
 	public String toString() {
 		DecimalFormat df = new DecimalFormat("#.##");
-		return "- PlayerDTO [pk_PlayerID=" + pk_PlayerID + ", playerName=" + playerName + ", registrationDate="
-				+ registrationDate + ",\ngames=" + games + ",\n\t winPercentage=" + df.format(winPercentage)+"%" + "]\n";
+		return "- PlayerDTO [pk_PlayerID=" + pk_PlayerID + ", username=" + username + ", password=" + password
+				+ ", registrationDate=" + registrationDate + ", role=" + role + ",\ngames=" + games + ",\n\t winPercentage="
+				+ df.format(winPercentage)+"%" + "]\n";
 	}
 
 	@Override

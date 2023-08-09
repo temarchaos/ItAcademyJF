@@ -9,5 +9,5 @@ import cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.domain
 
 @Repository
 public interface PlayerRepository extends JpaRepository<Player, Integer>{
-	Optional<Player> findByPlayerName(String playerName);
+	Optional<Player> findByUsername(String username);
 }

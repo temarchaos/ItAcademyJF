@@ -2,20 +2,29 @@ package cat.itacademy.barcelonactiva.floresdelpozo.jordi.s05.t02.n01.model.domai
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.*;
 
+@SuppressWarnings("serial")
 @Entity
-@Table(name = "players", uniqueConstraints = @UniqueConstraint(columnNames = "player_name"))
-public class Player {
-
+@Table(name = "players", uniqueConstraints = @UniqueConstraint(columnNames = "username"))
+public class Player implements UserDetails{
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int pk_PlayerID;
 	
-	@Column(name = "player_name", unique = true)
-	private String playerName;
+	@Column(name = "username", unique = true, nullable = false)
+	private String username;
+	
+	@Column(name = "password")
+	private String password;
 	
 	@Column(name = "registration_date", columnDefinition = "DATE")
 	private LocalDate registrationDate;
@@ -23,15 +32,22 @@ public class Player {
 	@OneToMany(mappedBy = "player", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Game> games = new ArrayList<>();
 	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "role")
+	private Role role;
+
 	public Player() {
 		
 	}
-
-	public Player(int pk_PlayerID, String playerName, LocalDate registrationDate, List<Game> games) {
+	
+	public Player(int pk_PlayerID, String username, String password, LocalDate registrationDate, List<Game> games,
+			Role role) {
 		this.pk_PlayerID = pk_PlayerID;
-		this.playerName = playerName;
+		this.username = username;
+		this.password = password;
 		this.registrationDate = registrationDate;
 		this.games = games;
+		this.role = role;
 	}
 
 	public int getPk_PlayerID() {
@@ -42,12 +58,20 @@ public class Player {
 		this.pk_PlayerID = pk_PlayerID;
 	}
 
-	public String getPlayerName() {
-		return playerName;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setPlayerName(String playerName) {
-		this.playerName = playerName;
+	public void setUsername(String playerName) {
+		this.username = playerName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public LocalDate getRegistrationDate() {
@@ -66,9 +90,42 @@ public class Player {
 		this.games = games;
 	}
 
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
 	@Override
 	public String toString() {
-		return "Player [pk_PlayerID=" + pk_PlayerID + ", playerName=" + playerName + ", registrationDate="
-				+ registrationDate + ", games=" + games + "]";
+		return "Player [pk_PlayerID=" + pk_PlayerID + ", username=" + username + ", password=" + password
+				+ ", registrationDate=" + registrationDate + ", games=" + games + ", role=" + role + "]";
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return List.of(new SimpleGrantedAuthority(role.name()));
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
 	}
 }
